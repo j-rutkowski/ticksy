@@ -5,7 +5,7 @@ type Props = {
   name: string;
   color: string;
   numberOfItems: number;
-  icon: React.ReactElement;
+  icon: string;
 };
 
 const List: FunctionComponent<Props> = ({
@@ -15,12 +15,12 @@ const List: FunctionComponent<Props> = ({
   icon,
 }) => {
   return (
-    <div className='flex flex-column justify-between'>
-      <div className='flex gap-2 items-center'>
+    <div className="flex flex-column justify-between">
+      <div className="flex gap-2 items-center">
         <ListIcon color={color} icon={icon} />
-        <span className='text-sm text-gray-800'>{name}</span>
+        <span className="text-sm text-gray-800">{name}</span>
       </div>
-      <span className='text-sm text-gray-400'>{numberOfItems}</span>
+      <span className="text-sm text-gray-400">{numberOfItems}</span>
     </div>
   );
 };

@@ -1,11 +1,9 @@
-import { IoCalendar, IoStar, IoFlag, IoList } from "react-icons/io5";
-
 type List = {
   id: number;
   name: string;
   color: string;
   numberOfItems: number;
-  icon: React.ReactElement;
+  icon: string;
   isActive: boolean;
 };
 
@@ -15,7 +13,7 @@ export const lists: List[] = [
     name: "Today",
     color: "blue",
     numberOfItems: 3,
-    icon: <IoStar />,
+    icon: "IoStar",
     isActive: true,
   },
   {
@@ -23,7 +21,7 @@ export const lists: List[] = [
     name: "Important",
     color: "red",
     numberOfItems: 5,
-    icon: <IoFlag />,
+    icon: "IoFlag",
     isActive: false,
   },
   {
@@ -31,7 +29,7 @@ export const lists: List[] = [
     name: "All",
     color: "green",
     numberOfItems: 4,
-    icon: <IoList />,
+    icon: "IoList",
     isActive: false,
   },
   {
@@ -39,7 +37,7 @@ export const lists: List[] = [
     name: "Planned",
     color: "yellow",
     numberOfItems: 2,
-    icon: <IoCalendar />,
+    icon: "IoCalendar",
     isActive: false,
   },
 ];

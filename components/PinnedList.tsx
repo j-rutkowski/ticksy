@@ -5,7 +5,7 @@ type Props = {
   name: string;
   color: string;
   numberOfItems: number;
-  icon: React.ReactElement;
+  icon: string;
   isActive: boolean;
   onClick: Dispatch<SetStateAction<string>>;
 };

@@ -23,28 +23,28 @@ const Checkbox: FunctionComponent<Props> = ({
   };
 
   return (
-    <label className='flex gap-2 items-center'>
+    <label className="flex gap-2 items-center">
       <input
-        type='checkbox'
+        type="checkbox"
         onChange={() => setIsChecked(!isChecked)}
         checked={isChecked}
-        className='hidden-checkbox'
+        className="hidden-checkbox"
       />
       <motion.div
-        className='w-5 h-5 rounded-md border-[2px] border-gray-400 hover:cursor-pointer'
+        className="w-5 h-5 rounded-md border-[2px] border-gray-400 hover:cursor-pointer"
         initial={false}
-        whileHover='hover'
-        whileTap='pressed'
+        whileHover="hover"
+        whileTap="pressed"
         variants={boxVariants}
       >
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <motion.path
-            fill='none'
-            stroke='black'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth='64'
-            d='M416 128L192 384l-96-96'
+            fill="none"
+            stroke="black"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="64"
+            d="M416 128L192 384l-96-96"
             initial={false}
             animate={isChecked ? "checked" : "unChecked"}
             variants={checkVariants}
