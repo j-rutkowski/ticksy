@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { IconContext } from "react-icons";
 import loadable from "@loadable/component";
 import dynamic from "next/dynamic";
-import { IoCalendar, IoStar, IoFlag, IoList } from "react-icons/io5";
+import * as icons from "react-icons/io5";
 
 type Props = {
   color: string;
@@ -10,9 +10,7 @@ type Props = {
 };
 
 const ListIcon: FunctionComponent<Props> = ({ color, icon }) => {
-  const Icon = dynamic(() =>
-    import("react-icons/io5/index.js").then((icons) => icons[icon])
-  );
+  const Icon = icons[icon as keyof typeof icons];
 
   return (
     <div
