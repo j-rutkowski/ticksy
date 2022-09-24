@@ -1,7 +1,6 @@
 import { FunctionComponent } from "react";
 import { IconContext } from "react-icons";
-import loadable from "@loadable/component";
-import dynamic from "next/dynamic";
+
 import * as icons from "react-icons/io5";
 
 type Props = {

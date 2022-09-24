@@ -1,17 +1,23 @@
-import { Dispatch, FunctionComponent, SetStateAction, useState } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLists } from "../context/ListsContext";
+import { ListType } from "../types/ListType";
 
-type Props = {
+type TaskProps = {
   name: string;
-  isChecked: boolean;
-  setIsChecked: Dispatch<SetStateAction<boolean>>;
 };
 
-const Checkbox: FunctionComponent<Props> = ({
-  name,
-  isChecked,
-  setIsChecked,
-}) => {
+const Task: FunctionComponent<TaskProps> = ({ name }) => {
+  const { lists, currentList } = useLists()!;
+  const [list, setList] = useState<ListType | null>(null);
+
+  useEffect(() => {
+    if (currentList) {
+      setList(lists.find((list) => list.name === currentList)!);
+    }
+  }),
+    [currentList];
+
   const boxVariants = {
     hover: { scale: 1.05 },
     pressed: { scale: 0.85 },
@@ -60,4 +66,4 @@ const Checkbox: FunctionComponent<Props> = ({
   );
 };
 
-export default Checkbox;
+export default Task;

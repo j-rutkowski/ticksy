@@ -1,8 +1,9 @@
-import { Task } from "./TaskType";
+import { TaskType } from "./TaskType";
 
-export type List = {
+export type ListType = {
     name: string;
     icon: string;
     color: string;
-    tasks: Task[];
+    tasks: TaskType[];
+    isPinned: boolean;
 }

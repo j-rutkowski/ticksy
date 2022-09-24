@@ -4,6 +4,7 @@ import logo from "../public/logo.svg";
 import Input from "../components/Input";
 import { useState, FunctionComponent } from "react";
 import { useAuth } from "../context/AuthContext";
+import Button from "./Button";
 
 const Auth: FunctionComponent = () => {
   const { login, signup, user } = useAuth();
@@ -53,12 +54,11 @@ const Auth: FunctionComponent = () => {
             value={password}
             onChange={setPassword}
           />
-          <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-medium p-3 rounded-xl w-full text-lg transition-all"
+          <Button
+            name={formMode === "login" ? "Sign in" : "Sign up"}
             onClick={handleAuth}
-          >
-            {formMode === "login" ? "Sign in" : "Sign up"}
-          </button>
+          />
+
           <span className="text-gray-600 text-center mt-2">
             {formMode === "login"
               ? "Don't have an account?"
