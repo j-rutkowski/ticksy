@@ -15,8 +15,14 @@ const Task: FunctionComponent<TaskProps> = ({ name }) => {
     if (currentList) {
       setList(lists.find((list) => list.name === currentList)!);
     }
-  }),
-    [currentList];
+  }, [currentList]);
+
+  const handleCheck = () => {
+    if (list) {
+      const newTasks = list.tasks.filter((task) => task.name !== name);
+      setList({ ...list, tasks: newTasks });
+    }
+  };
 
   const boxVariants = {
     hover: { scale: 1.05 },
