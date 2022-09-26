@@ -33,17 +33,21 @@ const Sidebar: React.FunctionComponent = () => {
               />
             ))}
         </div>
-        <div className="flex flex-col gap-3 p-4">
+        <div className="flex flex-col gap-2 py-4 px-3">
           <span className="text-gray-500 text-xs font-medium">My lists</span>
-          {lists.map((list) => (
-            <List
-              key={list.name}
-              name={list.name}
-              color={list.color}
-              numberOfItems={list.tasks.length}
-              icon={list.icon}
-            />
-          ))}
+          {lists
+            .filter((list) => list.isPinned === false)
+            .map((list) => (
+              <List
+                key={list.name}
+                name={list.name}
+                color={list.color}
+                numberOfItems={list.tasks.length}
+                icon={list.icon}
+                isActive={currentList === list.name}
+                onClick={setCurrentList}
+              />
+            ))}
         </div>
       </div>
     </div>
