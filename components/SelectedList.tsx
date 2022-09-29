@@ -33,19 +33,22 @@ const SelectedList: React.FunctionComponent = () => {
     updateTasks();
     updateList();
   }, [currentList]);
+
   return (
-    <div className="grid w-full h-full grid-rows-[10%_90%] p-8">
+    <div className='grid w-full h-full grid-rows-[10%_90%] p-8'>
       <h3 className={`text-3xl font-bold text-${list.color}-500`}>
         {currentList}
       </h3>
       <Reorder.Group
-        axis="y"
         values={tasks}
         onReorder={setTasks}
-        className="flex flex-col gap-3 px-2 items-start"
+        axis='y'
+        className='flex flex-col gap-3 px-2 items-start'
       >
         {tasks.map((task) => (
-          <Task key={list.name + task.name} taskObject={task} />
+          <Reorder.Item value={task} key={list.name + task.name}>
+            <Task name={task.name} />
+          </Reorder.Item>
         ))}
       </Reorder.Group>
     </div>
