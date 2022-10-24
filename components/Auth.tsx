@@ -29,30 +29,45 @@ const Auth: FunctionComponent = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleAuth();
+    }
+  };
+
   return (
     <div>
       <Image
         src={logo}
         className='absolute left-8 top-8 w-[120px] z-50 hidden md:block'
+        alt='logo'
       />
       <div className='md:hidden fixed h-16 top-0 left-0 right-0 z-50 bg-white flex items-center'>
-        <Image src={logo} className='h-3/5' />
+        <Image src={logo} className='h-3/5' alt='logo' />
       </div>
       <main className='grid grid-rows-[33%_1fr] md:grid-rows-1 md:grid-cols-[5fr_6fr] w-screen h-screen bg-white justify-items-center items-center relative'>
         <Image
           src={background}
           className='w-full h-full object-cover md:col-start-2'
+          alt='background'
         />
         <div className='bg-white flex flex-col w-5/6 lg:w-2/3 gap-5 md:row-start-1 max-w-md'>
           <h3 className='text-4xl font-semibold my-4'>
             {formMode === "login" ? "Welcome back" : "Welcome to Ticksy"}
           </h3>
-          <Input type='email' name='E-mail' value={email} onChange={setEmail} />
+          <Input
+            type='email'
+            name='E-mail'
+            value={email}
+            onChange={setEmail}
+            onKeyDown={handleKeyDown}
+          />
           <Input
             type='password'
             name='Password'
             value={password}
             onChange={setPassword}
+            onKeyDown={handleKeyDown}
           />
           <Button
             name={formMode === "login" ? "Sign in" : "Sign up"}

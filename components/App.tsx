@@ -12,7 +12,7 @@ const App: FunctionComponent = () => {
     <ListsContextProvider>
       <div>
         {user.displayName === null && <Overlay />}
-        <div className="grid md:grid-cols-[auto_1fr] w-screen h-screen">
+        <div className="grid md:grid-cols-[auto_1fr] w-screen h-screen select-none">
           <Sidebar />
           <SelectedList />
         </div>

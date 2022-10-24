@@ -18,7 +18,7 @@ const Sidebar: React.FunctionComponent = () => {
         <span className='font-medium'>{user.displayName}</span>
       </div>
       <div>
-        <div className='grid grid-rows-2 grid-cols-2 gap-2 items-center justify-items-center'>
+        <div className='grid grid-cols-2 gap-2 items-center justify-items-center'>
           {lists
             .filter((list) => list.isPinned === true)
             .map((list) => (

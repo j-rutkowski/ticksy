@@ -1,20 +1,23 @@
-import { FunctionComponent, useState, useEffect } from "react";
-import { motion, Reorder, useMotionValue } from "framer-motion";
+import { FunctionComponent, useState } from "react";
+import { motion, Reorder } from "framer-motion";
 import { useLists } from "../context/ListsContext";
 import { ListType } from "../types/ListType";
 import { IconContext } from "react-icons";
 import { IoReorderThree } from "react-icons/io5";
+import { TaskType } from "../types/TaskType";
 
 type TaskProps = {
-  name: string;
+  taskObject: TaskType;
 };
 
-const Task: FunctionComponent<TaskProps> = ({ name }) => {
+const Task: FunctionComponent<TaskProps> = ({ taskObject }) => {
+  const { name } = taskObject;
   const { lists, currentList } = useLists()!;
   const [list, setList] = useState<ListType>(
     lists.find((list) => list.name === currentList) as ListType
   );
   const [ticked, setTicked] = useState(false);
+  const [isDragged, setIsDragged] = useState(false);
 
   const handleTick = () => {
     if (list) {
@@ -39,9 +42,25 @@ const Task: FunctionComponent<TaskProps> = ({ name }) => {
     unChecked: { pathLength: 0, opacity: 0 },
   };
 
+  const TaskVariants = {
+    hidden: { opacity: 0, x: -100 },
+    animate: { opacity: 1, x: 0 },
+  };
+
   return (
-    <label className='flex items-center justify-between w-96'>
-      <div className='flex gap-2 items-center'>
+    <Reorder.Item
+      value={taskObject}
+      onDragStart={() => setIsDragged(true)}
+      onDragEnd={() => setIsDragged(false)}
+      className={`flex items-center justify-between bg-white w-96 rounded-lg p-2 ${
+        isDragged && "shadow-md cursor-grabbing"
+      }`}
+      draggable='true'
+      variants={TaskVariants}
+      initial='hidden'
+      animate='animate'
+    >
+      <label className='flex gap-2 items-center'>
         <input
           type='checkbox'
           onChange={handleTick}
@@ -73,11 +92,17 @@ const Task: FunctionComponent<TaskProps> = ({ name }) => {
         >
           {name}
         </span>
-      </div>
-      <IconContext.Provider value={{ color: "gray" }}>
+      </label>
+      <IconContext.Provider
+        value={{
+          size: "1.5em",
+          color: "gray",
+          className: "hover:cursor-grab",
+        }}
+      >
         <IoReorderThree />
       </IconContext.Provider>
-    </label>
+    </Reorder.Item>
   );
 };
 
