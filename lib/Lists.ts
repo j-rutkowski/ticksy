@@ -1,4 +1,5 @@
 import { ListType } from "../types/ListType";
+import { v4 as uuidv4 } from "uuid";
 
 export const sampleLists: ListType[] = [
   {
@@ -8,11 +9,11 @@ export const sampleLists: ListType[] = [
     tasks: [
       {
         name: "Buy milk",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy eggs",
-        ticked: false,
+        id: uuidv4()
       }
     ],
     isPinned: true,
@@ -24,15 +25,15 @@ export const sampleLists: ListType[] = [
     tasks: [
       {
         name: "Buy milk",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy eggs",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy bread",
-        ticked: false,
+        id: uuidv4()
       }
     ],
     isPinned: true,
@@ -44,7 +45,7 @@ export const sampleLists: ListType[] = [
     tasks: [
       {
         name: "Buy milk",
-        ticked: false,
+        id: uuidv4()
       },
     ],
     isPinned: true,
@@ -56,19 +57,19 @@ export const sampleLists: ListType[] = [
     tasks: [
       {
         name: "Buy milk",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy eggs",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy bread",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy cheese",
-        ticked: false,
+        id: uuidv4()
       }
     ],
     isPinned: true,
@@ -80,11 +81,11 @@ export const sampleLists: ListType[] = [
     tasks: [
       {
         name: "Buy milk",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy eggs",
-        ticked: false,
+        id: uuidv4()
       },
     ],
     isPinned: false,
@@ -96,11 +97,11 @@ export const sampleLists: ListType[] = [
     tasks: [
       {
         name: "Buy milk",
-        ticked: false,
+        id: uuidv4()
       },
       {
         name: "Buy broccoli",
-        ticked: false,
+        id: uuidv4()
       },
     ],
     isPinned: false,

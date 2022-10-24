@@ -8,9 +8,10 @@ import { TaskType } from "../types/TaskType";
 
 type TaskProps = {
   taskObject: TaskType;
+  handleDelete: () => void;
 };
 
-const Task: FunctionComponent<TaskProps> = ({ taskObject }) => {
+const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
   const { name } = taskObject;
   const { lists, currentList } = useLists()!;
   const [list, setList] = useState<ListType>(
@@ -20,17 +21,8 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject }) => {
   const [isDragged, setIsDragged] = useState(false);
 
   const handleTick = () => {
-    if (list) {
-      // const newTasks = list.tasks.filter((task) => task.name !== name);
-      setTicked(!ticked);
-      const newTasks = list.tasks.map((task) => {
-        if (task.name === name) {
-          return { ...task, ticked: !task.ticked };
-        }
-        return task;
-      });
-      setList({ ...list, tasks: newTasks });
-    }
+    setTicked(!ticked);
+    handleDelete();
   };
 
   const boxVariants = {
@@ -43,8 +35,8 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject }) => {
   };
 
   const TaskVariants = {
-    hidden: { opacity: 0, x: -100 },
-    animate: { opacity: 1, x: 0 },
+    hidden: { opacity: 0 },
+    animate: { opacity: 1 },
   };
 
   return (
@@ -54,33 +46,33 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject }) => {
       onDragEnd={() => setIsDragged(false)}
       className={`flex items-center justify-between bg-white w-96 rounded-lg p-2 ${
         isDragged && "shadow-md cursor-grabbing"
-      }`}
-      draggable='true'
+      } ${ticked && "pointer-events-none"}`}
+      draggable="true"
+      initial="hidden"
+      animate="animate"
       variants={TaskVariants}
-      initial='hidden'
-      animate='animate'
     >
-      <label className='flex gap-2 items-center'>
+      <label className="flex gap-2 items-center">
         <input
-          type='checkbox'
+          type="checkbox"
           onChange={handleTick}
           checked={ticked}
-          className='hidden-checkbox'
+          className="hidden-checkbox"
         />
         <motion.div
-          className='w-5 h-5 rounded-md border-[2px] border-gray-400 hover:cursor-pointer'
+          className="w-5 h-5 rounded-md border-[2px] border-gray-400 hover:cursor-pointer"
           initial={false}
-          whileTap='pressed'
+          whileTap="pressed"
           variants={boxVariants}
         >
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <motion.path
-              fill='none'
-              stroke='black'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='64'
-              d='M416 128L192 384l-96-96'
+              fill="none"
+              stroke="black"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="64"
+              d="M416 128L192 384l-96-96"
               initial={false}
               animate={ticked ? "checked" : "unChecked"}
               variants={checkVariants}
