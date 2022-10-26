@@ -28,17 +28,17 @@ const AddTask: React.FunctionComponent<AddTaskProps> = ({ handleAdd }) => {
   };
 
   return (
-    <div className="w-96 flex gap-3 items-center">
+    <div className='w-96 max-w-[calc(100vw-4rem)] flex gap-3 items-center'>
       <input
-        type="text"
+        type='text'
         placeholder="Enter task's name"
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}
         onKeyDown={(e) => handleKeyDown(e)}
-        className="w-full py-2 px-3 border-[2px] border-black rounded-lg bg-white focus:outline-none"
+        className='w-full py-2 px-3 border-[2px] border-black rounded-lg bg-white focus:outline-none'
       />
       <button
-        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-[calc(0.5rem+2px)] rounded-lg transition-all px-3"
+        className='bg-blue-500 hover:bg-blue-600 text-white font-medium py-[calc(0.5rem+2px)] rounded-lg transition-all px-3'
         onClick={handleClick}
       >
         <IconContext.Provider value={{ color: "white", size: "24px" }}>

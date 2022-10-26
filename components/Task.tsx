@@ -1,9 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { motion, Reorder } from "framer-motion";
-import { useLists } from "../context/ListsContext";
-import { ListType } from "../types/ListType";
 import { IconContext } from "react-icons";
-import { IoReorderThree } from "react-icons/io5";
+import { IoReorderTwo } from "react-icons/io5";
 import { TaskType } from "../types/TaskType";
 
 type TaskProps = {
@@ -13,10 +11,7 @@ type TaskProps = {
 
 const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
   const { name } = taskObject;
-  const { lists, currentList } = useLists()!;
-  const [list, setList] = useState<ListType>(
-    lists.find((list) => list.name === currentList) as ListType
-  );
+
   const [ticked, setTicked] = useState(false);
   const [isDragged, setIsDragged] = useState(false);
 
@@ -36,7 +31,8 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
 
   const TaskVariants = {
     hidden: { opacity: 0 },
-    animate: { opacity: 1 },
+    animate: { opacity: 1, transition: { duration: 0.2, delay: 0.4 } },
+    exit: { opacity: 0, y: -20 },
   };
 
   return (
@@ -44,35 +40,36 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
       value={taskObject}
       onDragStart={() => setIsDragged(true)}
       onDragEnd={() => setIsDragged(false)}
-      className={`flex items-center justify-between bg-white w-96 rounded-lg p-2 ${
+      className={`flex items-center justify-between bg-white w-96 max-w-[calc(100vw-4rem)] rounded-lg p-2 ${
         isDragged && "shadow-md cursor-grabbing"
       } ${ticked && "pointer-events-none"}`}
-      draggable="true"
-      initial="hidden"
-      animate="animate"
+      draggable='true'
+      initial='hidden'
+      animate='animate'
+      exit='exit'
       variants={TaskVariants}
     >
-      <label className="flex gap-2 items-center">
+      <label className='flex gap-2 items-center'>
         <input
-          type="checkbox"
+          type='checkbox'
           onChange={handleTick}
           checked={ticked}
-          className="hidden-checkbox"
+          className='hidden-checkbox'
         />
         <motion.div
-          className="w-5 h-5 rounded-md border-[2px] border-gray-400 hover:cursor-pointer"
+          className='w-5 h-5 rounded-md border-[2px] border-gray-400 hover:cursor-pointer'
           initial={false}
-          whileTap="pressed"
+          whileTap='pressed'
           variants={boxVariants}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
             <motion.path
-              fill="none"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="64"
-              d="M416 128L192 384l-96-96"
+              fill='none'
+              stroke='black'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='64'
+              d='M416 128L192 384l-96-96'
               initial={false}
               animate={ticked ? "checked" : "unChecked"}
               variants={checkVariants}
@@ -92,7 +89,7 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
           className: "hover:cursor-grab",
         }}
       >
-        <IoReorderThree />
+        <IoReorderTwo />
       </IconContext.Provider>
     </Reorder.Item>
   );

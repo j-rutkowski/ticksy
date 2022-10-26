@@ -7,11 +7,12 @@ import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
 
 const Auth: FunctionComponent = () => {
-  const { login, signup, user } = useAuth();
+  const { login, signup, updateUserName } = useAuth();
 
   const [formMode, setFormMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const switchFormMode = () => {
     setFormMode(formMode === "login" ? "register" : "login");
@@ -22,7 +23,7 @@ const Auth: FunctionComponent = () => {
       if (formMode === "login") {
         await login(email, password);
       } else if (formMode === "register") {
-        await signup(email, password);
+        await signup(email, password, name);
       }
     } catch (error) {
       console.log(error);
@@ -51,7 +52,7 @@ const Auth: FunctionComponent = () => {
           className='w-full h-full object-cover md:col-start-2'
           alt='background'
         />
-        <div className='bg-white flex flex-col w-5/6 lg:w-2/3 gap-5 md:row-start-1 max-w-md'>
+        <div className='bg-white flex flex-col w-5/6 lg:w-2/3 gap-5 md:row-start-1 max-w-md self-start md:self-center mt-8 md:mt-0'>
           <h3 className='text-4xl font-semibold my-4'>
             {formMode === "login" ? "Welcome back" : "Welcome to Ticksy"}
           </h3>
@@ -69,6 +70,15 @@ const Auth: FunctionComponent = () => {
             onChange={setPassword}
             onKeyDown={handleKeyDown}
           />
+          {formMode === "register" && (
+            <Input
+              type='text'
+              name='Name'
+              value={name}
+              onChange={setName}
+              onKeyDown={handleKeyDown}
+            />
+          )}
           <Button
             name={formMode === "login" ? "Sign in" : "Sign up"}
             onClick={handleAuth}

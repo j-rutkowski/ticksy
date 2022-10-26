@@ -7,7 +7,7 @@ type Props = {
   numberOfItems: number;
   icon: string;
   isActive: boolean;
-  onClick: Dispatch<SetStateAction<string>>;
+  onClick: (listName: string) => void;
 };
 
 const PinnedList: FunctionComponent<Props> = ({

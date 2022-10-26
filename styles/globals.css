@@ -8,6 +8,7 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {

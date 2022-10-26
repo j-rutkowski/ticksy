@@ -3,18 +3,38 @@ import { useAuth } from "../context/AuthContext";
 import { useLists } from "../context/ListsContext";
 import PinnedList from "./PinnedList";
 import List from "./List";
+import MenuButton from "./MenuButton";
+import { IconContext } from "react-icons";
+import { IoExitOutline } from "react-icons/io5";
 
-const Sidebar: React.FunctionComponent = () => {
+type Props = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: () => void;
+};
+
+const Sidebar: React.FunctionComponent<Props> = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+}) => {
   const { user, logout } = useAuth();
-  const { lists, setLists, currentList, setCurrentList } = useLists()!;
+  const { lists, currentList, setCurrentList } = useLists()!;
+
+  const updateList = (listName: string) => {
+    setCurrentList(listName);
+    setIsSidebarOpen();
+  };
 
   return (
-    <div className='bg-gray-100 p-4 h-full w-full flex flex-col gap-10'>
-      <div
-        className='flex items-center flex-row gap-2 hover:cursor-pointer'
-        onClick={logout}
-      >
-        <ProfilePicture letter={user.displayName[0]} />
+    <div
+      className={`z-10 bg-gray-100 p-4 h-full w-full md:flex flex-col gap-10 md:relative absolute top-0 bottom-0 left-0 right-0 ${
+        isSidebarOpen ? "flex" : "hidden"
+      }`}
+    >
+      <MenuButton type='close' setIsSidebarOpen={setIsSidebarOpen} />
+      <div className='flex items-center flex-row gap-2 mt-4 ml-4 md:m-0'>
+        <ProfilePicture
+          letter={user.displayName != null ? user.displayName[0] : "A"}
+        />
         <span className='font-medium'>{user.displayName}</span>
       </div>
       <div>
@@ -29,7 +49,7 @@ const Sidebar: React.FunctionComponent = () => {
                 numberOfItems={list.tasks.length}
                 icon={list.icon}
                 isActive={currentList === list.name}
-                onClick={setCurrentList}
+                onClick={updateList}
               />
             ))}
         </div>
@@ -45,11 +65,20 @@ const Sidebar: React.FunctionComponent = () => {
                 numberOfItems={list.tasks.length}
                 icon={list.icon}
                 isActive={currentList === list.name}
-                onClick={setCurrentList}
+                onClick={updateList}
               />
             ))}
         </div>
       </div>
+      <span
+        className='text-gray-500 font-medium absolute bottom-8 left-8 hover:cursor-pointer flex flex-row items-center gap-2'
+        onClick={logout}
+      >
+        Log out
+        <IconContext.Provider value={{ color: "dark-gray", size: "1.5rem" }}>
+          <IoExitOutline />
+        </IconContext.Provider>
+      </span>
     </div>
   );
 };

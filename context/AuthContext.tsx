@@ -1,11 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   onAuthStateChanged,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  User,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../config/firebase";
 
@@ -39,8 +38,10 @@ export const AuthContextProvider = ({
     return () => unsubscribe();
   }, []);
 
-  const signup = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signup = (email: string, password: string, name: string) => {
+    return createUserWithEmailAndPassword(auth, email, password).then(() =>
+      updateUserName(name)
+    );
   };
 
   const login = (email: string, password: string) => {
@@ -53,13 +54,14 @@ export const AuthContextProvider = ({
   };
 
   const updateUserName = (name: string) => {
-    updateProfile(auth.currentUser!, {
-      displayName: name,
-    });
     setUser((prevState: typeof user) => ({
       ...prevState,
       displayName: name,
     }));
+
+    return updateProfile(auth.currentUser!, {
+      displayName: name,
+    });
   };
 
   return (
