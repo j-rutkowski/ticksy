@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -7,6 +14,8 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../config/firebase";
+import { translateError } from "../lib/error";
+import { createSampleLists } from "../lib/firestore";
 
 const AuthContext = createContext<any>({});
 
@@ -37,14 +46,29 @@ export const AuthContextProvider = ({
     return () => unsubscribe();
   }, []);
 
-  const signup = (email: string, password: string, name: string) => {
-    return createUserWithEmailAndPassword(auth, email, password).then(() =>
-      updateUserName(name)
-    );
+  const signup = (
+    email: string,
+    password: string,
+    name: string,
+    setError: Dispatch<SetStateAction<string>>
+  ) => {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then(() => updateUserName(name))
+      .then(() => createSampleLists())
+      .catch((error) => {
+        setError(error.message);
+      });
   };
 
-  const login = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const login = (
+    email: string,
+    password: string,
+    setError: Dispatch<SetStateAction<string>>
+  ) => {
+    return signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      const errorMessage = translateError(error.code);
+      setError(errorMessage);
+    });
   };
 
   const logout = async () => {

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { ListsContextProvider } from "../context/ListsContext";
 import { ListType } from "../types/ListType";
@@ -8,7 +8,7 @@ import Sidebar from "./Sidebar";
 
 const App: FunctionComponent = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"New" | "Edit">("New");
   const [list, setList] = useState<ListType | null>(null);
 
@@ -21,6 +21,13 @@ const App: FunctionComponent = () => {
       setList(null);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
     <ListsContextProvider>

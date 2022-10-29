@@ -5,7 +5,7 @@ import PinnedList from "./PinnedList";
 import List from "./List";
 import MenuButton from "./MenuButton";
 import { IconContext } from "react-icons";
-import { IoExitOutline } from "react-icons/io5";
+import { IoAddCircle, IoExitOutline } from "react-icons/io5";
 
 type Props = {
   isSidebarOpen: boolean;
@@ -73,12 +73,24 @@ const Sidebar: React.FunctionComponent<Props> = ({
         </div>
       </div>
       <span
-        className='text-gray-500 font-medium absolute bottom-8 left-8 hover:cursor-pointer flex flex-row items-center gap-2'
+        className={`text-gray-500 font-medium absolute ${
+          isSidebarOpen ? "bottom-4 right-6" : "top-5 right-4"
+        } hover:cursor-pointer flex flex-row items-center gap-2`}
         onClick={logout}
+        title='Logout'
       >
-        Log out
         <IconContext.Provider value={{ color: "dark-gray", size: "1.5rem" }}>
           <IoExitOutline />
+        </IconContext.Provider>
+      </span>
+      <span
+        className='text-gray-500 font-medium absolute bottom-4 left-4 hover:cursor-pointer flex flex-row items-center gap-2'
+        onClick={setIsModalOpen}
+        title='Add a new list'
+      >
+        Add a new list
+        <IconContext.Provider value={{ color: "dark-gray", size: "1.5rem" }}>
+          <IoAddCircle />
         </IconContext.Provider>
       </span>
     </div>

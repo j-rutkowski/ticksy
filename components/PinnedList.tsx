@@ -1,5 +1,6 @@
-import { Dispatch, FunctionComponent, SetStateAction } from "react";
+import { FunctionComponent } from "react";
 import ListIcon from "../components/ListIcon";
+import { truncate } from "../lib/truncate";
 
 type Props = {
   name: string;
@@ -34,11 +35,11 @@ const PinnedList: FunctionComponent<Props> = ({
         {numberOfItems}
       </span>
       <span
-        className={`font-medium leading-5 self-end justify-self-start ${
+        className={`w-[7.5rem] font-medium leading-5 self-end justify-self-start ${
           !isActive && "text-gray-600"
         }`}
       >
-        {name}
+        {truncate(name, 16)}
       </span>
     </div>
   );

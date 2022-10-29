@@ -6,7 +6,7 @@ import * as ionicons from "react-icons/io5";
 import { useLists } from "../context/ListsContext";
 import { ListType } from "../types/ListType";
 import Checkbox from "./Checkbox";
-import Button from "./Button";
+import SmallButton from "./SmallButton";
 import { TaskType } from "../types/TaskType";
 
 type Props = {
@@ -26,21 +26,24 @@ const ListModal: React.FunctionComponent<Props> = ({
   const [isPinned, setIsPinned] = useState<boolean>(
     list ? list.isPinned : false
   );
-  const [tasks, setTasks] = useState<TaskType[]>(list ? list.tasks : []);
+  const tasks: TaskType[] = list ? list.tasks : [];
   const { addList, deleteList, updateList } = useLists()!;
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   const colors = ["red", "green", "blue", "yellow", "orange", "violet"];
-  // list of icons from react-icons/io5 that can be used as list icons
+
   const icons = [
     "IoStar",
     "IoBookmark",
     "IoAirplane",
+    "IoList",
     "IoAlarm",
     "IoAlert",
     "IoArchive",
     "IoBag",
     "IoBasket",
     "IoBeer",
+    "IoSchool",
     "IoBicycle",
     "IoBook",
     "IoBriefcase",
@@ -132,25 +135,51 @@ const ListModal: React.FunctionComponent<Props> = ({
             );
           })}
         </div>
-        <Button
-          name='Save'
-          onClick={() => {
-            const listObject: ListType = {
-              name: name,
-              color: color,
-              icon: icon,
-              isPinned: isPinned,
-              tasks: tasks,
-            };
-
-            if (type === "New") {
-              addList(listObject);
-            } else {
-              updateList(list!, listObject);
-            }
-            setIsModalOpen();
-          }}
-        />
+        <div className='flex flex-col gap-2'>
+          <SmallButton
+            name='Save list'
+            onClick={() => {
+              const listObject: ListType = {
+                name: name,
+                color: color,
+                icon: icon,
+                isPinned: isPinned,
+                tasks: tasks,
+              };
+              if (type === "New") {
+                addList(listObject);
+              } else {
+                updateList(list!, listObject);
+              }
+              setIsModalOpen();
+            }}
+            color='blue'
+          />
+          {type === "Edit" &&
+            (isDeleteModalOpen ? (
+              <div className='flex flex-row gap-2'>
+                <SmallButton
+                  name='Confirm'
+                  onClick={() => {
+                    deleteList(list!);
+                    setIsModalOpen();
+                  }}
+                  color='red'
+                />
+                <SmallButton
+                  name='Cancel'
+                  onClick={() => setIsDeleteModalOpen(false)}
+                  color='gray'
+                />
+              </div>
+            ) : (
+              <SmallButton
+                name='Delete list'
+                onClick={() => setIsDeleteModalOpen(true)}
+                color='red'
+              />
+            ))}
+        </div>
       </div>
     </div>
   );

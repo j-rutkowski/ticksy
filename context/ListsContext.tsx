@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { ListType } from "../types/ListType";
 import { updateUserLists, getUserLists } from "../lib/firestore";
-import { sampleLists } from "../lib/Lists";
+import { v4 as uuidv4 } from "uuid";
 
 type ListContextType = {
   lists: ListType[];
@@ -11,6 +11,7 @@ type ListContextType = {
   addList: (list: ListType) => void;
   deleteList: (oldList: ListType) => void;
   updateList: (oldList: ListType, newList: ListType) => void;
+  getLists: () => Promise<void>;
 };
 
 const ListsContext = createContext<ListContextType | null>(null);
@@ -24,18 +25,58 @@ export const ListsContextProvider = ({
 }) => {
   const [lists, setLists] = useState<ListType[]>([
     {
-      name: "Loading...",
+      name: "Example",
       icon: "IoStar",
       color: "blue",
+      tasks: [
+        {
+          name: "Your first task!",
+          id: uuidv4(),
+        },
+      ],
+      isPinned: true,
+    },
+    {
+      name: "Planned",
+      icon: "IoCalendar",
+      color: "red",
+      tasks: [],
+      isPinned: true,
+    },
+    {
+      name: "All",
+      icon: "IoList",
+      color: "slate",
+      tasks: [],
+      isPinned: true,
+    },
+    {
+      name: "Important",
+      icon: "IoFlag",
+      color: "yellow",
+      tasks: [],
+      isPinned: true,
+    },
+    {
+      name: "School",
+      icon: "IoSchool",
+      color: "violet",
+      tasks: [],
+      isPinned: false,
+    },
+    {
+      name: "Groceries",
+      icon: "IoCart",
+      color: "green",
       tasks: [],
       isPinned: false,
     },
   ]);
-  const [currentList, setCurrentList] = useState<string>("Loading...");
+  const [currentList, setCurrentList] = useState<string>("Example");
 
   const updateLists = (newLists: ListType[]) => {
     setLists(newLists);
-    if (currentList !== "Loading...") {
+    if (currentList !== "Example") {
       updateUserLists(newLists);
     }
   };
@@ -43,12 +84,14 @@ export const ListsContextProvider = ({
   const addList = (newList: ListType) => {
     const newLists = [...lists, newList];
     setLists(newLists);
+    setCurrentList(newList.name);
     updateUserLists(newLists);
   };
 
   const deleteList = (oldList: ListType) => {
     const newLists = lists.filter((list) => list.name !== oldList.name);
     setLists(newLists);
+    setCurrentList(newLists[0].name);
     updateUserLists(newLists);
   };
 
@@ -64,12 +107,16 @@ export const ListsContextProvider = ({
     updateUserLists(newLists);
   };
 
+  const getLists = async () => {
+    const userLists = await getUserLists();
+    if (userLists.length > 0) {
+      setLists(userLists);
+      setCurrentList(userLists[0].name);
+    }
+  };
+
   useEffect(() => {
-    getUserLists().then((lists) => {
-      console.log(lists);
-      setLists(lists);
-      setCurrentList(lists[0].name);
-    });
+    getLists();
   }, []);
 
   return (
@@ -82,6 +129,7 @@ export const ListsContextProvider = ({
         addList,
         deleteList,
         updateList,
+        getLists,
       }}
     >
       {children}

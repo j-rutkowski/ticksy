@@ -8,6 +8,7 @@ import AddTask from "./AddTask";
 import MenuButton from "./MenuButton";
 import { IconContext } from "react-icons";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { useAuth } from "../context/AuthContext";
 
 type Props = {
   setIsSidebarOpen: () => void;
@@ -18,7 +19,8 @@ const SelectedList: React.FunctionComponent<Props> = ({
   setIsSidebarOpen,
   updateModal,
 }) => {
-  const { lists, updateLists, currentList } = useLists()!;
+  const { lists, updateLists, currentList, getLists } = useLists()!;
+  const { user } = useAuth()!;
   const [list, setList] = useState<ListType>(
     lists.find((list) => list.name === currentList) as ListType
   );
@@ -58,7 +60,13 @@ const SelectedList: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     updateList();
-  }, [currentList]);
+  }, [lists, currentList]);
+
+  useEffect(() => {
+    if (user) {
+      getLists();
+    }
+  }, [user]);
 
   return (
     <div className='grid w-full h-full grid-rows-[2.5rem_5rem_1fr] p-8 relative'>

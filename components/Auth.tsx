@@ -2,31 +2,28 @@ import Image from "next/image";
 import background from "../public/background.jpg";
 import logo from "../public/logo.svg";
 import Input from "../components/Input";
-import { useState, FunctionComponent } from "react";
+import { useState, FunctionComponent, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
 
 const Auth: FunctionComponent = () => {
-  const { login, signup, updateUserName } = useAuth();
+  const { login, signup } = useAuth();
 
   const [formMode, setFormMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [error, setError] = useState("");
 
   const switchFormMode = () => {
     setFormMode(formMode === "login" ? "register" : "login");
   };
 
   const handleAuth = async () => {
-    try {
-      if (formMode === "login") {
-        await login(email, password);
-      } else if (formMode === "register") {
-        await signup(email, password, name);
-      }
-    } catch (error) {
-      console.log(error);
+    if (formMode === "login") {
+      await login(email, password, setError);
+    } else if (formMode === "register") {
+      await signup(email, password, name, setError);
     }
   };
 
@@ -35,6 +32,10 @@ const Auth: FunctionComponent = () => {
       handleAuth();
     }
   };
+
+  useEffect(() => {
+    setError("");
+  }, [formMode, email, password, name]);
 
   return (
     <div>
@@ -56,6 +57,7 @@ const Auth: FunctionComponent = () => {
           <h3 className='text-4xl font-semibold my-4'>
             {formMode === "login" ? "Welcome back" : "Welcome to Ticksy"}
           </h3>
+          {error && <p className='text-red-500'>{error}</p>}
           <Input
             type='email'
             name='E-mail'
