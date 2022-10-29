@@ -28,7 +28,6 @@ export const AuthContextProvider = ({
           email: user.email,
           displayName: user.displayName,
         });
-        console.log(user);
       } else {
         setUser(null);
       }

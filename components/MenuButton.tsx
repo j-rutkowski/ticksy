@@ -1,8 +1,5 @@
 import { IconContext } from "react-icons";
-import {
-  IoCaretDownCircleOutline,
-  IoCaretUpCircleOutline,
-} from "react-icons/io5";
+import { IoMenu, IoClose } from "react-icons/io5";
 
 type Props = {
   type: string;
@@ -21,11 +18,7 @@ const MenuButton: React.FunctionComponent<Props> = ({
       }`}
     >
       <IconContext.Provider value={{ color: "dark-gray", size: "2rem" }}>
-        {type === "open" ? (
-          <IoCaretDownCircleOutline />
-        ) : (
-          <IoCaretUpCircleOutline />
-        )}
+        {type === "open" ? <IoMenu /> : <IoClose />}
       </IconContext.Provider>
     </button>
   );

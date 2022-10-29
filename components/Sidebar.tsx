@@ -10,11 +10,13 @@ import { IoExitOutline } from "react-icons/io5";
 type Props = {
   isSidebarOpen: boolean;
   setIsSidebarOpen: () => void;
+  setIsModalOpen: () => void;
 };
 
 const Sidebar: React.FunctionComponent<Props> = ({
   isSidebarOpen,
   setIsSidebarOpen,
+  setIsModalOpen,
 }) => {
   const { user, logout } = useAuth();
   const { lists, currentList, setCurrentList } = useLists()!;

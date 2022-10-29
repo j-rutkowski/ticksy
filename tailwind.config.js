@@ -6,10 +6,10 @@ module.exports = {
   ],
   safelist: [
     {
-      pattern: /bg-(red|green|blue|yellow|slate|violet)-500/,
+      pattern: /bg-(red|green|blue|yellow|slate|violet|orange)-500/,
     },
     {
-      pattern: /text-(red|green|blue|yellow|slate|violet)-500/,
+      pattern: /text-(red|green|blue|yellow|slate|violet|orange)-500/,
     }
   ],
   theme: {

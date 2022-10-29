@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { motion, Reorder } from "framer-motion";
 import { IconContext } from "react-icons";
-import { IoReorderTwo } from "react-icons/io5";
+import { MdDragIndicator } from "react-icons/md";
 import { TaskType } from "../types/TaskType";
 
 type TaskProps = {
@@ -32,7 +32,7 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
   const TaskVariants = {
     hidden: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.2, delay: 0.4 } },
-    exit: { opacity: 0, y: -20 },
+    exit: { opacity: 0 },
   };
 
   return (
@@ -89,7 +89,7 @@ const Task: FunctionComponent<TaskProps> = ({ taskObject, handleDelete }) => {
           className: "hover:cursor-grab",
         }}
       >
-        <IoReorderTwo />
+        <MdDragIndicator />
       </IconContext.Provider>
     </Reorder.Item>
   );

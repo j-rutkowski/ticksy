@@ -13,6 +13,7 @@ const AddTask: React.FunctionComponent<AddTaskProps> = ({ handleAdd }) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      handleClick();
     }
   };
 

@@ -11,10 +11,14 @@ import { IoEllipsisVertical } from "react-icons/io5";
 
 type Props = {
   setIsSidebarOpen: () => void;
+  updateModal: (type: "New" | "Edit", list?: ListType) => void;
 };
 
-const SelectedList: React.FunctionComponent<Props> = ({ setIsSidebarOpen }) => {
-  const { lists, setLists, currentList } = useLists()!;
+const SelectedList: React.FunctionComponent<Props> = ({
+  setIsSidebarOpen,
+  updateModal,
+}) => {
+  const { lists, updateLists, currentList } = useLists()!;
   const [list, setList] = useState<ListType>(
     lists.find((list) => list.name === currentList) as ListType
   );
@@ -28,7 +32,7 @@ const SelectedList: React.FunctionComponent<Props> = ({ setIsSidebarOpen }) => {
       }
       return list;
     });
-    setLists(newLists);
+    updateLists(newLists);
   };
 
   const updateList = () => {
@@ -63,16 +67,18 @@ const SelectedList: React.FunctionComponent<Props> = ({ setIsSidebarOpen }) => {
         <h3 className={`text-3xl font-bold text-${list.color}-500`}>
           {currentList}
         </h3>
-        <IconContext.Provider
-          value={{
-            color: "gray",
-            className:
-              "hover:brightness-125 hover:cursor-pointer transition-all duration-200 mt-1",
-            size: "1.2rem",
-          }}
-        >
-          <IoEllipsisVertical />
-        </IconContext.Provider>
+        <button onClick={() => updateModal("Edit", list)}>
+          <IconContext.Provider
+            value={{
+              color: "gray",
+              className:
+                "hover:brightness-125 hover:cursor-pointer transition-all duration-200 mt-1",
+              size: "1.2rem",
+            }}
+          >
+            <IoEllipsisVertical />
+          </IconContext.Provider>
+        </button>
       </div>
       <AddTask handleAdd={handleAdd} />
 

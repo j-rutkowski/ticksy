@@ -1,4 +1,4 @@
-import Image from "next/future/image";
+import Image from "next/image";
 import background from "../public/background.jpg";
 import logo from "../public/logo.svg";
 import Input from "../components/Input";
