@@ -97,6 +97,15 @@ const Auth: FunctionComponent = () => {
               {formMode === "login" ? "Sign up!" : "Sign in!"}
             </a>
           </span>
+          <span className='text-gray-600 text-center mt-2'>
+            To try the app, use the following credentials:
+            <br />
+            <span className='font-medium'>Email: </span>
+            <span className='text-gray-500'>demo@demo.com</span>
+            <br />
+            <span className='font-medium'>Password: </span>
+            <span className='text-gray-500'>demodemo</span>
+          </span>
         </div>
       </main>
     </div>
